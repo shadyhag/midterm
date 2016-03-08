@@ -13,11 +13,10 @@ var densestZC = "https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT *
 var biketypes = 'https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM bikedata';
 var sixtypes = 'https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM bikenetworkdensityzipcodes';
 var cyclephilly = "https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM cyclephilly_roadsegmenttrips WHERE linkname IN ('05TH', 'MARKET', 'MARKET ST', 'Market St', 'S 5th St', 'CHESTNUT AVE','Chestnut Ave', 'CHESTNUT', '20TH', 'JOHN F KENNEDY', 'SPRING GARDEN')";
-var fifthstreet = "https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM cyclephilly_roadsegmenttrips WHERE linkname IN ('N 5th St', '05TH')";
 var crash = "https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM cyclephilly_roadsegmenttrips WHERE linkname IN ('05TH', 'S 5th St', '20TH')";
+var two0street = "https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM cyclephilly_roadsegmenttrips WHERE linkname IN ('20TH')";
 //5th Street, 20th Street, Chestnut Street, John F Kennedy Street, Market Street, and Spring Garden.
-// var dataset4 =
-// var dataset5 =
+
 
 var myFeatureGroup;
 
@@ -44,76 +43,11 @@ var removeAllLayers = function(){
 };
 
 
-//
-// $.ajax(citymarkers).done(function(data) {console.log(data);
-//   myFeatureGroup = L.geoJson(data, {
-//     // onEachFeature: eachFeature,
-//     // style: myStyle1
-//     // filter: myFilter
-//
-//   });
-//   myFeatureGroup.addTo(map).bindPopup(feature.properties);
-// });
-
-
-
 /*=====================
 
 STYLES
 
 ===================== */
-
-
-//
-// //('New York', 'Philadelphia', 'Washington', 'Boston', 'Pittsburgh','Baltimore', 'Chicago')";
-
-// function highlightFeature(e) {
-//     var layer = e.target;
-//
-//     layer.setStyle({
-//         weight: 5,
-//         color: '#666',
-//         dashArray: '',
-//         fillOpacity: 0.7
-//     });
-//
-//     if (!L.Browser.ie && !L.Browser.opera) {
-//         layer.bringToFront();
-//     }
-// }
-//
-// function resetHighlight(e) {
-//   var layer = e.target;
-//
-//   layer.setStyle(cityMarkerOptions);
-//
-//   if (!L.Browser.ie && !L.Browser.opera) {
-//       layer.bringToFront();
-//   }
-// }
-//
-//
-// function onEachFeature(feature, layer) {
-//     layer.on({
-//         mouseover: highlightFeature,
-//         mouseout: resetHighlight,
-//
-//     });
-// }
-// //
-// var cityEachFeature = function(feature, layer) {
-//   layer.on('mouseover', function (e) {
-//     $(e.layer._icon).addClass('selectedMarker');
-//  });
-//  layer.on('mouseout', function (e) {
-//    $(e.layer._icon).removeClass('selectedMarker');
-// });
-// layer.on('click', function(e){
-//   e.layer.feature.properties['marker-color'] = '#ff8888';
-// });
-// console.log("WOOOO", feature, layer);
-// };
-
 var cityMarkerOptions = {
   radius: 8,
   fillColor: "grey",
@@ -160,32 +94,7 @@ function onEachFeature(feature, layer) {
 
   });
 }
-// switch(feature.properties.city1) {
-//   case "New York":
-//       $(me.layer._icon).addClass('selectedMarker');
-//   break;
-//   case "Philadelphia":
-//
-//   break;
-//   case "Washington":
-//
-//   break;
-//   case "Boston":
-//
-//   break;
-//   case "Pittsburgh":
-//
-//   break;
-//   case "Baltimore":
-//
-//   break;
-//   case "Chicago":
-//
-//   break;
-//   default:
-//
-//   break;
-// }
+
 // Choropleth
 function getDemColor(d) {
   return d > 248  ? '#800026' :
@@ -389,7 +298,7 @@ var bikeStyle = function(feature) {
     $('#content4').hide();
     $('#content5').show();
     $('#content6').hide();
-    map.setView([39.968456, -75.124256],14);
+    map.setView([39.952056, -75.164076],14);
   };
 
   var showSlide6 = function(){
