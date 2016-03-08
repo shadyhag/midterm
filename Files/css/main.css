@@ -55,12 +55,6 @@ body {
     color: #777;
 }
 
-/*
-.selectedMarker {
-
-}*/
-
-
 .box {
   background-color: #e6e6e6;
   margin-top: 10px;
@@ -104,14 +98,19 @@ body {
   display: inline-block;
 }
 
+.one{}
+.twenty3{}
+.sixty4{}
+.one22{}
+.two48{}
 .Buff {
-  background: red}
+  background: orange}
 
-.BuffC {background-color: "orange"}
-.Sharrow {background-color: "green"}
-.Conv {background-color: "blue"}
-.ConSh {background-color: "purple"}
-.Cont{background-color: "yellow"}
+.BuffC {background-color: green}
+.Sharrow {background-color: yellow}
+.Conv {background-color: red}
+.ConSh {background-color: blue}
+.Cont{background-color: purple}
 
 .previous{
   float: left;
