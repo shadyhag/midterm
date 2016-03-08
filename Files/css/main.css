@@ -98,11 +98,13 @@ body {
   display: inline-block;
 }
 
-.one{}
-.twenty3{}
-.sixty4{}
-.one22{}
-.two48{}
+.one{background-color: #FD8D3C}
+.twenty3{background-color: #FC4E2A}
+.sixty4{background-color: #E31A1C}
+.one22{background-color:#BD0026}
+.two48{background-color:#800026}
+
+
 .Buff {
   background: orange}
 

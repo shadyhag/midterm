@@ -159,7 +159,11 @@ var bikeStyle = function(feature) {
     weight: 2};
   };
 
-
+  var two0style = function(feature) {
+    return {fillColor: "black",
+    color: "black",
+    opacity:1};
+  };
 
   /* =====================
 
@@ -284,7 +288,7 @@ var bikeStyle = function(feature) {
     $('#content4').show();
     $('#content5').hide();
     $('#content6').hide();
-    map.setView([39.968456, -75.124256],12);
+    map.setView([39.958286, -75.170902],13);
   };
 
   var showSlide5 = function(){
@@ -304,13 +308,14 @@ var bikeStyle = function(feature) {
   var showSlide6 = function(){
     removeAllLayers();
     addLayer(phlzipcodes,{style: phlZCstyle});
+    addLayer(two0street,{style: two0style});
     $('#content1').hide();
     $('#content2').hide();
     $('#content3').hide();
     $('#content4').hide();
     $('#content5').hide();
     $('#content6').show();
-    map.setView([40.000, -75.1090],10);
+    map.setView([39.951230, -75.173984],15);
   };
 
 
