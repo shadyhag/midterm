@@ -7,12 +7,15 @@ http://www.chartjs.org/
 DATA
 
 ===================== */
-var citymarkers = "https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM pennjobsdatatable20160220 WHERE city1 IN ('New York', 'Philadelphia', 'Washington D.C.', 'Boston', 'Pittsburgh','Baltimore', 'Chicago')";
+var citymarkers = "https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM pennjobsdatatable20160220 WHERE city1 IN ('New York', 'Philadelphia', 'Washington', 'Boston', 'Pittsburgh','Baltimore', 'Chicago')";
 var phlzipcodes = 'https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM philadelphia_zipcodes_poly201302';
 var densestZC = "https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM philadelphia_zipcodes_poly201302 WHERE code IN ('19109', '19103', '19107', '19139', '19104', '19102', '19130', '19123')";
 var biketypes = 'https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM bikedata';
-
-
+var sixtypes = 'https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM bikenetworkdensityzipcodes';
+var cyclephilly = "https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM bikenetworkdensityzipcodes WHERE streetname = (')";
+var fifthstreet = "https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM cyclephilly_roadsegmenttrips WHERE linkname IN ('N 5th St', '05TH')";
+var crash = "https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM cyclephilly_roadsegmenttrips WHERE linkname IN ('N 5th St', '05TH', 'S 5th St', '20TH')";
+//5th Street, 20th Street, Chestnut Street, John F Kennedy Street, Market Street, and Spring Garden.
 // var dataset4 =
 // var dataset5 =
 
@@ -20,8 +23,10 @@ var myFeatureGroup;
 
 var allFeatureGroups = [];
 
+legend = null;
 var addLayer= function(url, options){
   $.ajax(url).done(function(data){
+    console.log(url, data);
     var geoJson = L.geoJson(data, options).addTo(map);
     allFeatureGroups.push(geoJson);
   });
@@ -32,6 +37,10 @@ var removeAllLayers = function(){
     geoJson.clearLayers();
   });
   allFeatureGroups = [];
+  if(legend){
+    legend.removeFrom(map);
+    legend = null;
+  }
 };
 
 
@@ -46,7 +55,7 @@ var removeAllLayers = function(){
 //   myFeatureGroup.addTo(map).bindPopup(feature.properties);
 // });
 
-addLayer(citymarkers);
+
 
 /*=====================
 
@@ -54,6 +63,129 @@ STYLES
 
 ===================== */
 
+
+//
+// //('New York', 'Philadelphia', 'Washington', 'Boston', 'Pittsburgh','Baltimore', 'Chicago')";
+
+// function highlightFeature(e) {
+//     var layer = e.target;
+//
+//     layer.setStyle({
+//         weight: 5,
+//         color: '#666',
+//         dashArray: '',
+//         fillOpacity: 0.7
+//     });
+//
+//     if (!L.Browser.ie && !L.Browser.opera) {
+//         layer.bringToFront();
+//     }
+// }
+//
+// function resetHighlight(e) {
+//   var layer = e.target;
+//
+//   layer.setStyle(cityMarkerOptions);
+//
+//   if (!L.Browser.ie && !L.Browser.opera) {
+//       layer.bringToFront();
+//   }
+// }
+//
+//
+// function onEachFeature(feature, layer) {
+//     layer.on({
+//         mouseover: highlightFeature,
+//         mouseout: resetHighlight,
+//
+//     });
+// }
+// //
+// var cityEachFeature = function(feature, layer) {
+//   layer.on('mouseover', function (e) {
+//     $(e.layer._icon).addClass('selectedMarker');
+//  });
+//  layer.on('mouseout', function (e) {
+//    $(e.layer._icon).removeClass('selectedMarker');
+// });
+// layer.on('click', function(e){
+//   e.layer.feature.properties['marker-color'] = '#ff8888';
+// });
+// console.log("WOOOO", feature, layer);
+// };
+
+var cityMarkerOptions = {
+    radius: 8,
+    fillColor: "grey",
+    color: "grey",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8,
+    onEachFeature: onEachFeature
+
+};
+
+function highlightFeature(e) {
+    var layer = e.target;
+
+    layer.setStyle({
+        radius: 8,
+        weight: 1,
+        fillColor: "#16174f",
+        color: "#16174f",
+        dashArray: '',
+        fillOpacity: 1
+    });
+
+    if (!L.Browser.ie && !L.Browser.opera) {
+        layer.bringToFront();
+    }
+}
+
+function resetHighlight(e) {
+  var layer = e.target;
+
+  layer.setStyle(cityMarkerOptions);
+
+  if (!L.Browser.ie && !L.Browser.opera) {
+      layer.bringToFront();
+  }
+}
+
+
+function onEachFeature(feature, layer) {
+    layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+
+    });
+}
+    // switch(feature.properties.city1) {
+    //   case "New York":
+    //       $(me.layer._icon).addClass('selectedMarker');
+    //   break;
+    //   case "Philadelphia":
+    //
+    //   break;
+    //   case "Washington":
+    //
+    //   break;
+    //   case "Boston":
+    //
+    //   break;
+    //   case "Pittsburgh":
+    //
+    //   break;
+    //   case "Baltimore":
+    //
+    //   break;
+    //   case "Chicago":
+    //
+    //   break;
+    //   default:
+    //
+    //   break;
+    // }
 // Choropleth
 function getColor(d) {
     return d > (4.122520)  ? '#E31A1C' :
@@ -77,19 +209,46 @@ function getColor(d) {
 
 
 var densestZCstyle = function(feature) {
-  return {fillColor: "red",
-          color: "red",
-          opacity:0.2};
-};
-
-var phlZCstyle = function(feature) {
   return {fillColor: "blue",
           color: "blue",
+          opacity:0
+};
+};
+var phlZCstyle = function(feature) {
+  return {fillColor: "grey",
+          color: "grey",
           opacity:0};
 };
 
-// var myStyle = function(feature) {
-//   switch(feature.properties.code) {
+
+var bikeStyle = function(feature) {
+  switch(feature.properties.type_) {
+      case "Conventional":
+      color = "red";
+      break;
+      case "Sharrow":
+      color = "yellow";
+      break;
+      case "Buffered":
+      color = "orange";
+      break;
+      case "Buffered w Conventional":
+      color = "green";
+      break;
+      case "Conventional w Sharrows":
+      color = "blue";
+      break;
+      case "Contraflow w Conventional, same":
+      color = "purple";
+      break;
+      default:
+      color = "gray";
+      break;
+    }
+  return {color: color,
+    weight: 4};
+};
+// switch(feature.properties.type_) {
 //     case "MON":
 //     color = "#25404d";
 //     break;
@@ -111,16 +270,6 @@ var phlZCstyle = function(feature) {
 //   }
 //   return {fillColor: color};
 // };
-// var phlZCstyle = function(feature) {
-//   return feature.properties.code
-//   :
-//   {fillColor: "grey", color: "grey", opacity:0};
-// };
-// var phlZCstyle = function(feature) {
-//   return feature.properties.pop90_sqmi < 100 ? {fillColor: "red", color: "red", opacity:0}:
-//   {fillColor: "grey", color: "grey", opacity:0};
-// };
-//
 
 
 /* =====================
@@ -128,120 +277,132 @@ var phlZCstyle = function(feature) {
 SLIDES
 
 ===================== */
+addLayer(citymarkers,{
+  pointToLayer: function (feature, loc){
+    return L.circleMarker(loc, cityMarkerOptions);
+  },
+  onEachFeature: onEachFeature
+});
 
 var showSlide1 = function() {
 
   removeAllLayers();
-  addLayer(citymarkers);
+  addLayer(citymarkers,{
+    pointToLayer: function (feature, loc){
+      return L.circleMarker(loc, cityMarkerOptions);
+    },
+    onEachFeature: onEachFeature
+  });
 
   $('#content2').hide();
   $('#content1').show();
   $('#content3').hide();
   $('#content4').hide();
   $('#content5').hide();
-  map.setView([39.840463, -81.475359],6);
+  $('#content6').hide();
+  map.setView([39.840463, -81.475359],5);
 };
 
 var showSlide2 = function(){
   removeAllLayers();
-  addLayer(biketypes);
-  addLayer(densestZC,{style: densestZCstyle});
+  addLayer(phlzipcodes,{style: phlZCstyle});
+  addLayer(biketypes,{style: bikeStyle});
+  legend = L.control({position: 'bottomright'});
+
+  legend.onAdd = function (map) {
+
+      var div = L.DomUtil.create('div', 'info legend'),
+          types = ["Buff", "BuffC", "Sharrow", "Conv", "ConSh", "Cont"],
+          labels = ["Buffered"];
+
+
+      // loop through our density intervals and generate a label with a colored square for each interval
+      for (var i = 0; i < types.length; i++) {
+          div.innerHTML += '<div> <i class = "legendbox ' + types[i] + '"></i> ' + labels[i] +'</div>';
+      }
+
+      return div;
+  };
+
+  legend.addTo(map);
   $('#content1').hide();
   $('#content2').show();
   $('#content3').hide();
   $('#content4').hide();
   $('#content5').hide();
-
-  // $.ajax(biketypes).done(function(data) {console.log(data);
-  //   myFeatureGroup = L.geoJson(data, {
-  //
-  //   }).addTo(map);
-  // });
-  // $.ajax(densestZC).done(function(data) {console.log(data);
-  //   myFeatureGroup = L.geoJson(data, {
-  //
-  //     style: densestZCstyle,
-  //
-  //   }).addTo(map);
-  // });
-  // $.ajax(phlzipcodes).done(function(data) {console.log(data);
-  //   myFeatureGroup = L.geoJson(data, {
-  //
-  //     style: phlZCstyle,
-  //
-  //   }).addTo(map);
-  // });
+  $('#content6').hide();
   map.setView([40.010305, -75.125318],11);
 };
 
 var showSlide3 = function(){
-  myFeatureGroup.clearLayers();
+  removeAllLayers();
+  addLayer(phlzipcodes,{style: phlZCstyle});
+  addLayer(sixtypes, {style: bikeStyle});
+  addLayer(densestZC,{style: densestZCstyle});
+  legend = L.control({position: 'bottomright'});
+
+  legend.onAdd = function (map) {
+
+      var div = L.DomUtil.create('div', 'info legend'),
+          types = ["Buff", "BuffC", "Sharrow", "Conv", "ConSh", "Cont"],
+          labels = ["Buffered"];
+
+
+      // loop through our density intervals and generate a label with a colored square for each interval
+      for (var i = 0; i < types.length; i++) {
+          div.innerHTML += '<div> <i class = "legendbox ' + types[i] + '"></i> ' + labels[i] +'</div>';
+      }
+
+      return div;
+  };
+
+  legend.addTo(map);
   $('#content1').hide();
   $('#content2').hide();
   $('#content3').show();
   $('#content4').hide();
   $('#content5').hide();
-  $.ajax(phlzipcodes).done(function(data) {console.log(data);
-    myFeatureGroup = L.geoJson(data, {
-
-      style: style,
-
-    }).addTo(map);
-  });
+  $('#content6').hide();
   map.setView([39.955720, -75.182261],13);
 };
 
 var showSlide4 = function(){
-  myFeatureGroup.clearLayers();
+    removeAllLayers();
+    addLayer(phlzipcodes,{style: phlZCstyle});
+    addLayer(cyclephilly);
   $('#content1').hide();
   $('#content2').hide();
   $('#content3').hide();
   $('#content4').show();
   $('#content5').hide();
-  // $.ajax(phlzipcodes).done(function(data) {
-  //     var myFeatureGroup = L.geoJson(data, {
-  //       // onEachFeature: eachFeature,
-  //       style: myStyle,
-  //       // filter: myFilter
-  //     }).addTo(map);
-  // });
-  // map.setView([40.000, -75.1090],11);
+$('#content6').hide();
+  map.setView([39.968456, -75.124256],12);
 };
 
 var showSlide5 = function(){
-  myFeatureGroup.clearLayers();
+  removeAllLayers();
+  addLayer(crash);
+  addLayer(phlzipcodes,{style: phlZCstyle});
+
   $('#content1').hide();
   $('#content2').hide();
   $('#content3').hide();
   $('#content4').hide();
   $('#content5').show();
   $('#content6').hide();
-  //   $.ajax(phlzipcodes).done(function(data) {
-  //       var myFeatureGroup = L.geoJson(data, {
-  //         // onEachFeature: eachFeature,
-  //         style: myStyle,
-  //         // filter: myFilter
-  //       }).addTo(map);
-  //   });
-  //   map.setView([40.000, -75.1090],11);
+  map.setView([39.968456, -75.124256],14);
 };
 
 var showSlide6 = function(){
-  myFeatureGroup.clearLayers();
+  removeAllLayers();
+  addLayer(phlzipcodes,{style: phlZCstyle});
   $('#content1').hide();
   $('#content2').hide();
   $('#content3').hide();
   $('#content4').hide();
   $('#content5').hide();
   $('#content6').show();
-  //   $.ajax(phlzipcodes).done(function(data) {
-  //       var myFeatureGroup = L.geoJson(data, {
-  //         // onEachFeature: eachFeature,
-  //         style: myStyle,
-  //         // filter: myFilter
-  //       }).addTo(map);
-  //   });
-  //   map.setView([40.000, -75.1090],11);
+  map.setView([40.000, -75.1090],10);
 };
 
 
@@ -311,8 +472,8 @@ Leaflet Configuration
 ===================== */
 
 var map = L.map('map', {
-  center: [39.840463, -81.475359],
-  zoom: 6
+  center: [40.922555, -79.745942],
+  zoom: 5
 });
 var Stamen_TonerLite = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
   attribution: 'Map tiles by <State`="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
