@@ -13,7 +13,7 @@ var densestZC = "https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT *
 var biketypes = 'https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM bikedata';
 var sixtypes = 'https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM bikenetworkdensityzipcodes';
 var cyclephilly = "https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM cyclephilly_roadsegmenttrips WHERE linkname IN ('05TH', 'MARKET', 'MARKET ST', 'Market St', 'S 5th St', 'CHESTNUT AVE','Chestnut Ave', 'CHESTNUT', '20TH', 'JOHN F KENNEDY', 'SPRING GARDEN')";
-var crash = "https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM cyclephilly_roadsegmenttrips WHERE linkname IN ('05TH', 'S 5th St', '20TH')";
+var crash = 'https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM crash5th20th';
 var two0street = "https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM cyclephilly_roadsegmenttrips WHERE linkname IN ('20TH')";
 //5th Street, 20th Street, Chestnut Street, John F Kennedy Street, Market Street, and Spring Garden.
 
@@ -321,6 +321,23 @@ var bikeStyle = function(feature) {
     $('#content4').hide();
     $('#content5').show();
     $('#content6').hide();
+    legend = L.control({position: 'bottomright'});
+    legend.onAdd = function (map) {
+
+      var div = L.DomUtil.create('div', 'info legend'),
+      types = ["bikeax"],
+      labels = ["Bicycle Accidents"];
+
+
+      // loop through our density intervals and generate a label with a colored square for each interval
+      for (var i = 0; i < types.length; i++) {
+        div.innerHTML += '<div> <i class = "legendbox ' + types[i] + '"></i> ' + labels[i] +'</div>';
+      }
+
+      return div;
+    };
+
+    legend.addTo(map);
     map.setView([39.952056, -75.164076],14);
   };
 
@@ -334,13 +351,30 @@ var bikeStyle = function(feature) {
     $('#content4').hide();
     $('#content5').hide();
     $('#content6').show();
+    legend = L.control({position: 'bottomright'});
+    legend.onAdd = function (map) {
+
+      var div = L.DomUtil.create('div', 'info legend'),
+      types = ["st"],
+      labels = ["20th Street"];
+
+
+      // loop through our density intervals and generate a label with a colored square for each interval
+      for (var i = 0; i < types.length; i++) {
+        div.innerHTML += '<div> <i class = "legendbox ' + types[i] + '"></i> ' + labels[i] +'</div>';
+      }
+
+      return div;
+    };
+
+    legend.addTo(map);
     map.setView([39.951230, -75.173984],15);
   };
 
 
 
   /* =====================
-  CHART 
+  CHART
   ===================== */
   $(function(){
     var ctx = $("#myChart1").get(0).getContext("2d");
