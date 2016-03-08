@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+  <!-- CSS Imports -->
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/leaflet.css" />
+  <link rel="stylesheet" href="css/main.css" />
+
+  <!-- =====================
+  Edit css/main.css
+
+  ====================== -->
+
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="top">
+
+      <!-- =====================
+      SLIDE 1
+
+      ====================== -->
+
+      <div id= "content1">
+        <button class="next" onclick="showSlide2()" style="float:right">Next</button>
+        <h1 class = "title"> Philadelphia Bike Lane Site Suitability </h1>
+        <div>
+          <h2 class = "subtitle">Introduction</h2>
+        </div>
+        <p class="main">Philadelphia has the highest percentage of bicycle commuters than any other city in the nation, but its yearly rate of
+          bike lane additions pales in comparison with other major cities.
+        </p>
+        <h2 class = "graphtitle">Annual Average Miles of Bike Lanes Added
+          <br>2008-2013 </br> </h2>
+          <canvas id="myChart1" width="280" height="280"></canvas>
+          <p class="main">
+            Most bike lanes are added when the roads get repaved. In 2013 and 2014, Philadelphia only repaved fifty miles of its roads at a rate of twenty-five
+            miles per year. This is much less than what a city should actually be repaving, which is around 140-150 miles per year.
+          </p>
+          <p class="main">
+            This backlog and consequently the rate of bike lane additions result in little funding allocated to street improvements. Since the City of Philadelphia
+            is severely restricted in its funding for street improvements, great care should be taken in deciding where and what kind of bike lanes the City
+            should add to increase bike infrastructure investments.
+
+          </p>
+          <p class="main">The following slides look at four different characteristics of the City's streets in order to filter out the street that
+            should be at the top of the list in new bike infrastructure. </p>
+
+          </div>
+          <!-- =====================
+          SLIDE 2
+
+          ====================== -->
+
+
+          <div id= "content2" style="display: none;">
+            <div>
+              <button class="next" onclick="showSlide3()" style="float:right">Next</button>
+              <br><br>
+              <div>
+                <button onclick="showSlide1()" type = "button" class = "previous"> Previous</button>
+              </div>
+              <div>
+                <h2 class = "subtitle">Existing Conditions</h2>
+              </div>
+              <p class="main">The first step in deciding which street should should be at the top of the list in
+                adding new bike infrastructure is to look at Philadelphia's exiting Bicycle Infrastructure.
+
+              </p>
+              <p class="main">
+                Currently there are six different types of bike lanes and they are scattered and in disconnected throughout the city, but mostly concentrated
+                around Center and University City. The next slide will look at the connectivity and mobility of the bike lanes in the two aforementioned areas.
+              </p>
+            </div>
+
+          </div>
+
+          <!-- =====================
+          SLIDE 3
+
+          ====================== -->
+
+          <div id= "content3" style="display: none;">
+            <div>
+              <button class="next" onclick="showSlide4()" style="float:right">Next</button>
+              <br><br>
+              <div>
+                <button onclick="showSlide2()" type = "button" class = "previous"> Previous</button>
+              </div>
+            </div>
+            <div>
+              <h2 class = "subtitle">Connectivity and Mobility</h2>
+            </div>
+            <p class="main">Optimizing network connectivity should begin in finding streets missing segments of bike infrastructure in Center and University Cities,
+              where bike infrastructure is at its densest. Fragmented bike infrastructure forces bicyclists to share the road with cars and make it difficult to bicyclists
+              to travel to their destination in the shortest and easiest way possible.
+            </p>
+            <p class="main">
+              Those streets were further narrowed down by their widths. To accomodate bike lanes, street widths must be at least 24 feet wide.
+              Taking all of this into consideration the number of potential streets decreased from 274 down to the following six:
+              5th Street, 20th Street, Chestnut Street, John F Kennedy Street, Market Street, and Spring Garden.
+            </p>
+          </div>
+          <!-- =====================
+          SLIDE 4
+
+          ====================== -->
+
+          <div id= "content4" style="display: none;">
+            <div>
+              <button class="next" onclick="showSlide5()" style="float:right">Next</button>
+              <br><br>
+              <div>
+                <button onclick="showSlide3()" type = "button" class = "previous"> Previous</button>
+              </div>
+            </div>
+            <div>
+              <h2 class = "subtitle">Demand</h2>
+            </div>
+            <p>Knowing which streets bicyclists travel most on will provide information on which of these six corridors are in highest demand of
+              additional bike infrastructure. DVRPC provides a dataset of 8,340 trips made from May 2014 to October 2014. This dataset was updated by
+              bicycle users logging their trips based on their geospatial location.
+              This provides insight on where which streets bicyclists prefer the most to travel.
+            </p>
+            <p> The top two corridors of the six in question that had the highest number of trips were on 5th Street and 20th Street. </p>
+
+            <h2>Streets</h2>
+            <div class="styleSheet">
+              <select class = "button">
+                <option>5th Street</option>
+                <option>20th Street</option>
+                <option>Market Street</option>
+                <option>Chestnut Avenue</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- =====================
+          SLIDE 5
+
+          ====================== -->
+
+          <div id= "content5" style="display: none;">
+            <div>
+              <button class="next" onclick="showSlide6()" style="float:right">Next</button>
+              <br><br>
+              <div>
+                <button onclick="showSlide4()" type = "button" class = "previous"> Previous</button>
+              </div>
+            </div>
+            <div>
+              <h2 class = "subtitle">Safety</h2>
+            </div>
+            <p>The last filter looked at which corridor had the highest number of bicycle accidents. This was based on the 2008-2012
+              Philadelphia traffic incidents shapefile obtained from the City of Philadelphia selecting only bicycle incidents along 5th Street and 20th Street.
+               There were a total of 53 bicycle incidents along 20th Street and 30 bicycle incidents along 5th Street. Based on this analysis it can be concluded
+               that 20th Street is more dangerous for bicyclists than 5th Street, and more care should be made to improve bicycle safety along this corridor.
+            </p>
+          </div>
+          <!-- =====================
+          SLIDE 6
+
+          ====================== -->
+          <div id= "content6" style="display: none;">
+            <div>
+              <button onclick="showSlide5()" type = "button" class = "previous"> Previous</button>
+              <br><br> -->
+              <div>
+                <button onclick="showSlide1()" type = "button" class = "previous">Back to Beginning</button>
+              </div>
+            </div>
+            <div>
+              <h2 class = "subtitle">Final Selection</h2>
+            </div>
+            <p>Although a greater number of trips were made on 5th Street as opposed to 20th Street, the corridor that should be at the top of the
+              priority list of bicycle infrastructure improvements should be 20th Street as it would make it safer for bicyclists to share the road with vehicles.
+            </p>
+
+          </div>
+          <!-- =====================
+          <div class="line-separator"></div>
+          <h1 class= "schools"> Schools </h1>
+          <div class ="box">
+
+          <p class = "schoolName"> Henry, Charles W. </p>
+          <p class = "level"> Elem/Middle </p>
+
+          <p class = "address"> 601 Carpenter La. <br> 19119-3405</br> </p>
+        </div>
+        <div class ="box">
+        <p class = "schoolName"> Universal Creighton Charter School </p>
+        <p class = "level"> Elem/Middle </p>
+        <p class = "address"> 5401 Taber Ave <br> 19210-3614 </p>
+      </div>
+      <div class = "box">
+      <p class = "schoolName"> Marshall, John </p>
+      <p class = "level"> Elementary School </p>
+    </div>
+
+    ====================== -->
+
+
+  </div>
+</div>
+
+
+
+
+<!-- Map -->
+
+<div id="map" class="map"></div>
+
+
+
+
+<!-- Javascript Imports -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
+<script src="js/leaflet.js"></script>
+<script src="js/jquery-2.2.0.js"></script>
+<script src="js/underscore.js"></script>
+<script src="js/leaflet.js"></script>
+<script src="js/main.js"></script>
+<script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+</body>
+</html>
