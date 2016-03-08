@@ -95,35 +95,7 @@ function onEachFeature(feature, layer) {
   });
 }
 
-// Choropleth
-function getDemColor(d) {
-  return d > 248  ? '#800026' :
-  d > 122 ? '#BD0026' :
-  d > 64  ? '#E31A1C' :
-  d > 23  ? '#FC4E2A' :
-  d > 1   ? '#FD8D3C' :
-            '#FEB24C' ;
-}
 
-
-function demandStyle(feature) {
-  return {
-    fillColor: getDemColor(feature.properties.ttrips),
-    weight: 3,
-    opacity: 1,
-    color: getDemColor(feature.properties.ttrips),
-
-    fillOpacity: 1
-  };
-}
-
-
-var densestZCstyle = function(feature) {
-  return {fillColor: "blue",
-  color: "blue",
-  opacity:0
-};
-};
 var phlZCstyle = function(feature) {
   return {fillColor: "grey",
   color: "grey",
@@ -157,6 +129,49 @@ var bikeStyle = function(feature) {
   }
   return {color: color,
     weight: 2};
+  };
+
+  // Choropleth
+  function getDemColor(d) {
+    return d > 248  ? '#800026' :
+    d > 122 ? '#BD0026' :
+    d > 64  ? '#E31A1C' :
+    d > 23  ? '#FC4E2A' :
+    d > 1   ? '#FD8D3C' :
+              '#FEB24C' ;
+  }
+
+
+  function demandStyle(feature) {
+    return {
+      fillColor: getDemColor(feature.properties.ttrips),
+      weight: 3,
+      opacity: 1,
+      color: getDemColor(feature.properties.ttrips),
+
+      fillOpacity: 1
+    };
+  }
+
+
+  var densestZCstyle = function(feature) {
+    return {fillColor: "blue",
+    color: "blue",
+    opacity:0
+  };
+  };
+
+
+
+  var safetyMarkerOptions = {
+    radius: 8,
+    fillColor: "orange",
+    color: "orange",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8,
+    onEachFeature: onEachFeature
+
   };
 
   var two0style = function(feature) {
@@ -293,8 +308,12 @@ var bikeStyle = function(feature) {
 
   var showSlide5 = function(){
     removeAllLayers();
-    addLayer(crash);
     addLayer(phlzipcodes,{style: phlZCstyle});
+    addLayer(crash,{
+      pointToLayer: function (feature, loc){
+        return L.circleMarker(loc, safetyMarkerOptions);
+      },
+    });
 
     $('#content1').hide();
     $('#content2').hide();
@@ -321,7 +340,7 @@ var bikeStyle = function(feature) {
 
 
   /* =====================
-  CHART & GRAPHS
+  CHART 
   ===================== */
   $(function(){
     var ctx = $("#myChart1").get(0).getContext("2d");
