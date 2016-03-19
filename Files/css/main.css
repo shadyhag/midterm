@@ -5,8 +5,6 @@ Add more styles here!
 body{
   padding:0;
   overflow:hidden;
-
-
 }
 
 
@@ -50,6 +48,7 @@ body{
     box-shadow:0 0 15px rgba(0000.2);
     border-radius:5px;
 }
+
 .info h4{
     margin:0 0 5px;
     color:#777;
@@ -67,19 +66,18 @@ body{
   background-color:#e6e6e6;
   margin:0;
   padding-top:10px;
-
-
 }
 
 .line-separator{
   height:1px;
   margin-top:20px;
   background:#717171;
-
   border-bottom:1px solid #313030;
 }
 
-.search{width:100%}
+.search{
+  width:100%
+}
 
 .row:after{
   content:;
@@ -98,25 +96,58 @@ body{
   display:inline-block;
 }
 
-.one{background-color:#FD8D3C}
-.twenty3{background-color:#FC4E2A}
-.sixty4{background-color:#E31A1C}
-.one22{background-color:#BD0026}
-.two48{background-color:#800026}
+.one{
+  background-color:#FD8D3C
+}
+
+.twenty3{
+  background-color:#FC4E2A
+}
+
+.sixty4{
+  background-color:#E31A1C
+}
+
+.one22{
+  background-color:#BD0026
+}
+
+.two48{
+  background-color:#800026
+}
 
 .bikeax{
   background-color:orange
 }
 
-.st{background-color:black}
-.Buff{
-  background:orange}
+.st{
+  background-color:black
+}
 
-.BuffC{background-color:green}
-.Sharrow{background-color:yellow}
-.Conv{background-color:red}
-.ConSh{background-color:blue}
-.Cont{background-color:purple}
+.Buff{
+  background:orange
+}
+
+.BuffC{
+  background-color:green
+}
+
+.Sharrow{
+  background-color:yellow
+}
+
+.Conv{
+  background-color:red
+}
+
+.ConSh{
+  background-color:blue
+}
+
+.Cont{
+  background-color:purple
+}
+
 
 .previous{
   float:left;
@@ -135,14 +166,14 @@ body{
   margin:0;
   display:inline-block;
   color:#16174f;
-  font-family:impact;
+  font-family: Impact, Haettenschweiler, 'Franklin Gothic Bold', Charcoal, 'Helvetica Inserat', 'Bitstream Vera Sans Bold', 'Arial Black', 'sans serif';
   font-weight:bold;
 }
 
 .subtitle{
   color:#963019;
   font-weight:normal;
-  font-family:Futura;
+  font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
   font-weight:bold;
 }
 
@@ -152,4 +183,6 @@ body{
 }
 
 
-#addressFrom{width:100%}
+#addressFrom{
+  width:100%
+}
