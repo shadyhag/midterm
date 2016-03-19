@@ -7,38 +7,38 @@ http://www.chartjs.org/
 DATA
 
 ===================== */
-var citymarkers = "https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM pennjobsdatatable20160220 WHERE city1 IN ('New York', 'Philadelphia', 'Washington', 'Boston', 'Pittsburgh','Baltimore', 'Chicago')";
-var phlzipcodes = 'https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM philadelphia_zipcodes_poly201302';
-var densestZC = "https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM philadelphia_zipcodes_poly201302 WHERE code IN ('19109', '19103', '19107', '19139', '19104', '19102', '19130', '19123')";
-var biketypes = 'https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM bikedata';
-var sixtypes = 'https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM bikenetworkdensityzipcodes';
-var cyclephilly = "https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM cyclephilly_roadsegmenttrips WHERE linkname IN ('05TH', 'MARKET', 'MARKET ST', 'Market St', 'S 5th St', 'CHESTNUT AVE','Chestnut Ave', 'CHESTNUT', '20TH', 'JOHN F KENNEDY', 'SPRING GARDEN')";
-var crash = 'https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM crash5th20th';
-var two0street = "https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM cyclephilly_roadsegmenttrips WHERE linkname IN ('20TH')";
+var citymarkers="https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM pennjobsdatatable20160220 WHERE city1 IN ('New York', 'Philadelphia', 'Washington', 'Boston', 'Pittsburgh','Baltimore', 'Chicago')";
+var phlzipcodes='https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM philadelphia_zipcodes_poly201302';
+var densestZC="https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM philadelphia_zipcodes_poly201302 WHERE code IN ('19109', '19103', '19107', '19139', '19104', '19102', '19130', '19123')";
+var biketypes='https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM bikedata';
+var sixtypes='https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM bikenetworkdensityzipcodes';
+var cyclephilly="https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM cyclephilly_roadsegmenttrips WHERE linkname IN ('05TH', 'MARKET', 'MARKET ST', 'Market St', 'S 5th St', 'CHESTNUT AVE','Chestnut Ave', 'CHESTNUT', '20TH', 'JOHN F KENNEDY', 'SPRING GARDEN')";
+var crash='https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM crash5th20th';
+var two0street="https://shayda.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM cyclephilly_roadsegmenttrips WHERE linkname IN ('20TH')";
 //5th Street, 20th Street, Chestnut Street, John F Kennedy Street, Market Street, and Spring Garden.
 
 
 var myFeatureGroup;
 
-var allFeatureGroups = [];
+var allFeatureGroups=[];
 
-legend = null;
+legend=null;
 var addLayer= function(url, options){
   $.ajax(url).done(function(data){
     console.log(url, data);
-    var geoJson = L.geoJson(data, options).addTo(map);
+    var geoJson=L.geoJson(data, options).addTo(map);
     allFeatureGroups.push(geoJson);
   });
 
 };
-var removeAllLayers = function(){
+var removeAllLayers=function(){
   $.each(allFeatureGroups, function(i, geoJson){
     geoJson.clearLayers();
   });
-  allFeatureGroups = [];
+  allFeatureGroups=[];
   if(legend){
     legend.removeFrom(map);
-    legend = null;
+    legend=null;
   }
 };
 
@@ -48,7 +48,7 @@ var removeAllLayers = function(){
 STYLES
 
 ===================== */
-var cityMarkerOptions = {
+var cityMarkerOptions={
   radius: 8,
   fillColor: "grey",
   color: "grey",
@@ -60,7 +60,7 @@ var cityMarkerOptions = {
 };
 
 function highlightFeature(e) {
-  var layer = e.target;
+  var layer=e.target;
 
   layer.setStyle({
     radius: 8,
@@ -77,7 +77,7 @@ function highlightFeature(e) {
 }
 
 function resetHighlight(e) {
-  var layer = e.target;
+  var layer=e.target;
 
   layer.setStyle(cityMarkerOptions);
 
@@ -96,35 +96,35 @@ function onEachFeature(feature, layer) {
 }
 
 
-var phlZCstyle = function(feature) {
+var phlZCstyle=function(feature) {
   return {fillColor: "grey",
   color: "grey",
   opacity:0};
 };
 
 
-var bikeStyle = function(feature) {
+var bikeStyle=function(feature) {
   switch(feature.properties.type_) {
     case "Conventional":
-    color = "red";
+    color="red";
     break;
     case "Sharrow":
-    color = "yellow";
+    color="yellow";
     break;
     case "Buffered":
-    color = "orange";
+    color="orange";
     break;
     case "Buffered w Conventional":
-    color = "green";
+    color="green";
     break;
     case "Conventional w Sharrows":
-    color = "blue";
+    color="blue";
     break;
     case "Contraflow w Conventional, same":
-    color = "purple";
+    color="purple";
     break;
     default:
-    color = "black";
+    color="black";
     break;
   }
   return {color: color,
@@ -154,7 +154,7 @@ var bikeStyle = function(feature) {
   }
 
 
-  var densestZCstyle = function(feature) {
+  var densestZCstyle=function(feature) {
     return {fillColor: "blue",
     color: "blue",
     opacity:0
@@ -163,7 +163,7 @@ var bikeStyle = function(feature) {
 
 
 
-  var safetyMarkerOptions = {
+  var safetyMarkerOptions={
     radius: 8,
     fillColor: "orange",
     color: "orange",
@@ -174,7 +174,7 @@ var bikeStyle = function(feature) {
 
   };
 
-  var two0style = function(feature) {
+  var two0style=function(feature) {
     return {fillColor: "black",
     color: "black",
     opacity:1};
@@ -192,7 +192,7 @@ var bikeStyle = function(feature) {
     onEachFeature: onEachFeature
   });
 
-  var showSlide1 = function() {
+  var showSlide1=function() {
 
     removeAllLayers();
     addLayer(citymarkers,{
@@ -211,22 +211,22 @@ var bikeStyle = function(feature) {
     map.setView([39.840463, -81.475359],5);
   };
 
-  var showSlide2 = function(){
+  var showSlide2=function(){
     removeAllLayers();
     addLayer(phlzipcodes,{style: phlZCstyle});
     addLayer(biketypes,{style: bikeStyle});
-    legend = L.control({position: 'bottomright'});
+    legend=L.control({position: 'bottomright'});
 
-    legend.onAdd = function (map) {
+    legend.onAdd=function (map) {
 
-      var div = L.DomUtil.create('div', 'info legend'),
-      types = ["Buff", "BuffC", "Sharrow", "Conv", "ConSh", "Cont"],
-      labels = ["Buffered", "Conventional Buffered", "Sharrow", "Conventional","Conventional w Sharrows","Contraflow" ];
+      var div=L.DomUtil.create('div', 'info legend'),
+      types=["Buff", "BuffC", "Sharrow", "Conv", "ConSh", "Cont"],
+      labels=["Buffered", "Conventional Buffered", "Sharrow", "Conventional","Conventional w Sharrows","Contraflow" ];
       div.innerHTML +='<h4> Bike Lane Typology <h4>';
 
       // loop through our density intervals and generate a label with a colored square for each interval
-      for (var i = 0; i < types.length; i++) {
-        div.innerHTML += '<div> <i class = "legendbox ' + types[i] + '"></i> ' + labels[i] +'</div>';
+      for (var i=0; i < types.length; i++) {
+        div.innerHTML += '<div> <i class="legendbox ' + types[i] + '"></i> ' + labels[i] +'</div>';
       }
 
       return div;
@@ -242,24 +242,24 @@ var bikeStyle = function(feature) {
     map.setView([40.010305, -75.125318],11);
   };
 
-  var showSlide3 = function(){
+  var showSlide3=function(){
     removeAllLayers();
     addLayer(phlzipcodes,{style: phlZCstyle});
     addLayer(sixtypes, {style: bikeStyle});
     addLayer(densestZC,{style: densestZCstyle});
 
-    legend = L.control({position: 'bottomright'});
+    legend=L.control({position: 'bottomright'});
 
-    legend.onAdd = function (map) {
+    legend.onAdd=function (map) {
 
-      var div = L.DomUtil.create('div', 'info legend'),
-      types = ["Buff", "BuffC", "Sharrow", "Conv", "ConSh", "Cont"],
-      labels = ["Buffered", "Conventional Buffered", "Sharrow", "Conventional","Conventional w Sharrows","Contraflow" ];
+      var div=L.DomUtil.create('div', 'info legend'),
+      types=["Buff", "BuffC", "Sharrow", "Conv", "ConSh", "Cont"],
+      labels=["Buffered", "Conventional Buffered", "Sharrow", "Conventional","Conventional w Sharrows","Contraflow" ];
 
       div.innerHTML +='<h4> Bike Lane Typology <h4>';
       // loop through our density intervals and generate a label with a colored square for each interval
-      for (var i = 0; i < types.length; i++) {
-        div.innerHTML += '<div> <i class = "legendbox ' + types[i] + '"></i> ' + labels[i] +'</div>';
+      for (var i=0; i < types.length; i++) {
+        div.innerHTML += '<div> <i class="legendbox ' + types[i] + '"></i> ' + labels[i] +'</div>';
       }
 
       return div;
@@ -275,22 +275,22 @@ var bikeStyle = function(feature) {
     map.setView([39.955720, -75.182261],13);
   };
 
-  var showSlide4 = function(){
+  var showSlide4=function(){
     removeAllLayers();
     addLayer(phlzipcodes,{style: phlZCstyle});
     addLayer(cyclephilly, {style: demandStyle});
-    legend = L.control({position: 'bottomright'});
+    legend=L.control({position: 'bottomright'});
 
-    legend.onAdd = function (map) {
+    legend.onAdd=function (map) {
 
-      var div = L.DomUtil.create('div', 'info legend'),
-      types = ["one", "twenty3", "sixty4", "one22", "two48"],
-      labels = ["1-22", "23-63", "64-121", "122-247","248-451"];
+      var div=L.DomUtil.create('div', 'info legend'),
+      types=["one", "twenty3", "sixty4", "one22", "two48"],
+      labels=["1-22", "23-63", "64-121", "122-247","248-451"];
 
       div.innerHTML +='<h4> Number of Trips<h4>';
       // loop through our density intervals and generate a label with a colored square for each interval
-      for (var i = 0; i < types.length; i++) {
-        div.innerHTML += '<div> <i class = "legendbox ' + types[i] + '"></i> ' + labels[i] +'</div>';
+      for (var i=0; i < types.length; i++) {
+        div.innerHTML += '<div> <i class="legendbox ' + types[i] + '"></i> ' + labels[i] +'</div>';
       }
 
       return div;
@@ -306,7 +306,7 @@ var bikeStyle = function(feature) {
     map.setView([39.958286, -75.170902],13);
   };
 
-  var showSlide5 = function(){
+  var showSlide5=function(){
     removeAllLayers();
     addLayer(phlzipcodes,{style: phlZCstyle});
     addLayer(crash,{
@@ -321,17 +321,17 @@ var bikeStyle = function(feature) {
     $('#content4').hide();
     $('#content5').show();
     $('#content6').hide();
-    legend = L.control({position: 'bottomright'});
-    legend.onAdd = function (map) {
+    legend=L.control({position: 'bottomright'});
+    legend.onAdd=function (map) {
 
-      var div = L.DomUtil.create('div', 'info legend'),
-      types = ["bikeax"],
-      labels = ["Bicycle Accidents"];
+      var div=L.DomUtil.create('div', 'info legend'),
+      types=["bikeax"],
+      labels=["Bicycle Accidents"];
 
 
       // loop through our density intervals and generate a label with a colored square for each interval
-      for (var i = 0; i < types.length; i++) {
-        div.innerHTML += '<div> <i class = "legendbox ' + types[i] + '"></i> ' + labels[i] +'</div>';
+      for (var i=0; i < types.length; i++) {
+        div.innerHTML += '<div> <i class="legendbox ' + types[i] + '"></i> ' + labels[i] +'</div>';
       }
 
       return div;
@@ -341,7 +341,7 @@ var bikeStyle = function(feature) {
     map.setView([39.952056, -75.164076],14);
   };
 
-  var showSlide6 = function(){
+  var showSlide6=function(){
     removeAllLayers();
     addLayer(phlzipcodes,{style: phlZCstyle});
     addLayer(two0street,{style: two0style});
@@ -351,17 +351,17 @@ var bikeStyle = function(feature) {
     $('#content4').hide();
     $('#content5').hide();
     $('#content6').show();
-    legend = L.control({position: 'bottomright'});
-    legend.onAdd = function (map) {
+    legend=L.control({position: 'bottomright'});
+    legend.onAdd=function (map) {
 
-      var div = L.DomUtil.create('div', 'info legend'),
-      types = ["st"],
-      labels = ["20th Street"];
+      var div=L.DomUtil.create('div', 'info legend'),
+      types=["st"],
+      labels=["20th Street"];
 
 
       // loop through our density intervals and generate a label with a colored square for each interval
-      for (var i = 0; i < types.length; i++) {
-        div.innerHTML += '<div> <i class = "legendbox ' + types[i] + '"></i> ' + labels[i] +'</div>';
+      for (var i=0; i < types.length; i++) {
+        div.innerHTML += '<div> <i class="legendbox ' + types[i] + '"></i> ' + labels[i] +'</div>';
       }
 
       return div;
@@ -377,9 +377,9 @@ var bikeStyle = function(feature) {
   CHART
   ===================== */
   $(function(){
-    var ctx = $("#myChart1").get(0).getContext("2d");
+    var ctx=$("#myChart1").get(0).getContext("2d");
     // This will get the first returned node in the jQuery collection.
-    var data = {
+    var data={
       labels: ["New York", "Boston", "Chicago", "Pittsburgh", "Baltimore", "Philadelphia", "Washington D.C."],
       datasets: [
         {
@@ -429,7 +429,7 @@ var bikeStyle = function(feature) {
 
     };
 
-    var myBarChart = new Chart(ctx).Bar(data,options1);
+    var myBarChart=new Chart(ctx).Bar(data,options1);
 
   });
 
@@ -437,11 +437,11 @@ var bikeStyle = function(feature) {
   Leaflet Configuration
   ===================== */
 
-  var map = L.map('map', {
+  var map=L.map('map', {
     center: [40.922555, -79.745942],
     zoom: 5
   });
-  var Stamen_TonerLite = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+  var Stamen_TonerLite=L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
     attribution: 'Map tiles by <State`="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     subdomains: 'abcd',
     minZoom: 0,
